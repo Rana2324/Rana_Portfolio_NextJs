@@ -1,0 +1,116 @@
+/* Navigation Hover Effects */
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Professional hover transitions */
+.nav-item {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-item:hover {
+  transform: translateY(-2px);
+}
+
+/* Enhanced active state */
+.nav-item-active {
+  position: relative;
+}
+
+.nav-item-active::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(45deg, 
+    hsl(var(--primary)), 
+    hsl(var(--primary) / 0.5), 
+    hsl(var(--primary))
+  );
+  border-radius: inherit;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
+  animation: gradientMove 3s linear infinite;
+}
+
+/* Sophisticated hover glow */
+.hover-glow {
+  position: relative;
+}
+
+.hover-glow::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  background: radial-gradient(
+    circle at center,
+    hsl(var(--primary) / 0.3),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.hover-glow:hover::after {
+  opacity: 1;
+}
+
+/* Button hover effects */
+.btn-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background-size: 200% 100%;
+  background-position: 100% 0;
+}
+
+.btn-hover:hover {
+  background-position: 0 0;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -10px hsl(var(--primary) / 0.3);
+}
+
+/* Icon hover animation */
+.icon-hover {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.icon-hover:hover {
+  transform: scale(1.2) rotate(8deg);
+}

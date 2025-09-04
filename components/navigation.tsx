@@ -1,0 +1,346 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Menu,
+  X,
+  Phone,
+  Mail,
+  Home,
+  User,
+  Briefcase,
+  Code,
+  FolderGit2,
+  GraduationCap,
+  MessageSquare,
+  Github,
+  Linkedin,
+  Facebook,
+  Download,
+  FileText,
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import * as Tooltip from "@radix-ui/react-tooltip";
+import "./logo-styles.css";
+
+const navItems = [
+  { id: "home", icon: Home, label: "Home" },
+  { id: "about", icon: User, label: "About" },
+  { id: "services", icon: Briefcase, label: "Services" },
+  { id: "skills", icon: Code, label: "Skills" },
+  { id: "portfolio", icon: FolderGit2, label: "Portfolio" },
+  { id: "experience", icon: GraduationCap, label: "Experience" },
+  { id: "contact", icon: MessageSquare, label: "Contact" },
+];
+
+export const HeaderSection = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+
+      const winScroll = document.documentElement.scrollTop;
+      const height =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      setScrollProgress((winScroll / height) * 100);
+
+      const sections = navItems.map((item) => item.id);
+      for (const section of sections.reverse()) {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 150) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    element?.scrollIntoView({ behavior: "smooth" });
+    setIsMenuOpen(false);
+  };
+
+  return (
+    <Tooltip.Provider>
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? "bg-background/80 backdrop-blur-xl  shadow-lg shadow-primary/10"
+            : "bg-transparent"
+        }`}
+      >
+        {/* Scroll Progress */}
+        <motion.div
+          className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-primary to-purple-500"
+          style={{ width: `${scrollProgress}%` }}
+          transition={{ type: "spring", damping: 20 }}
+        />
+
+        <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <div className="flex items-center justify-between">
+            {/* Logo */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              onClick={() => scrollToSection("home")}
+              className="cursor-pointer font-extrabold text-xs sm:text-lg md:text-xl tracking-tight"
+            >
+              <span className="text-lg sm:text-xl md:text-2xl font-bold relative flex items-center gap-1 sm:gap-2">
+                <motion.div
+                  initial={{ rotate: -10 }}
+                  animate={{ rotate: 10 }}
+                  transition={{
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    duration: 1.5,
+                  }}
+                  className="bg-gradient-to-br from-indigo-500/10 to-purple-600/10 p-1 sm:p-2 rounded-full"
+                >
+                  <FolderGit2 className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-indigo-400 drop-shadow-[0_0_8px_rgba(129,140,248,0.8)]" />
+                </motion.div>
+                <span className="logo-text font-extrabold tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-white to-indigo-100 whitespace-nowrap overflow-hidden text-ellipsis max-w-[150px] sm:max-w-none">
+                  Rana Mohammad Shohel
+                </span>
+                <span className="absolute -inset-1 -z-10 blur-sm bg-gradient-to-r from-indigo-500/40 to-purple-600/40 opacity-75 rounded-full"></span>
+              </span>
+            </motion.div>
+
+            {/* Desktop Nav */}
+            <motion.nav
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="hidden md:flex items-center space-x-1"
+            >
+              {navItems.map((item, index) => (
+                <Button
+                  key={item.id}
+                  variant="ghost"
+                  onClick={() => scrollToSection(item.id)}
+                  className={`relative text-sm font-medium capitalize transition-colors group overflow-hidden ${
+                    activeSection === item.id
+                      ? "text-primary"
+                      : "text-gray-300 hover:text-primary"
+                  }`}
+                >
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.1 * index }}
+                    className="flex items-center space-x-1.5 z-10 relative"
+                  >
+                    <motion.div
+                      whileHover={{ rotate: 15, scale: 1.2 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 10,
+                      }}
+                      className={`w-7 h-7 flex items-center justify-center rounded-full 
+                        ${
+                          activeSection === item.id
+                            ? "bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border border-indigo-500/30"
+                            : "bg-transparent"
+                        }`}
+                    >
+                      <item.icon
+                        className={`h-4 w-4 ${
+                          activeSection === item.id
+                            ? "text-indigo-400"
+                            : "text-gray-400"
+                        }`}
+                      />
+                    </motion.div>
+                    <motion.span
+                      whileHover={{
+                        scale: 1.1,
+                        color: "rgb(99, 102, 241)",
+                        textShadow: "0 0 12px rgba(99, 102, 241, 0.8)",
+                        letterSpacing: "0.05em",
+                      }}
+                      transition={{ type: "spring", stiffness: 400 }}
+                      className="relative z-10 font-medium"
+                    >
+                      {item.label}
+                      <motion.span
+                        className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-indigo-500 to-purple-500"
+                        initial={{ scaleX: 0, opacity: 0 }}
+                        whileHover={{ scaleX: 1, opacity: 1 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </motion.span>
+                  </motion.div>
+                  <motion.div
+                    className="absolute inset-0 bg-primary/10 rounded-md -z-0"
+                    initial={{ opacity: 0, y: "100%" }}
+                    whileHover={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </Button>
+              ))}
+
+              {/* Download CV dropdown */}
+              {/* (keeping your CV dropdown code as-is) */}
+
+              {/* Social Links */}
+              <div className="ml-4 flex items-center space-x-3">
+                <div className="h-8 bg-[#1E1E3F]/40 border border-indigo-500/10 rounded-full flex items-center px-1 backdrop-blur-sm">
+                  {/* GitHub */}
+                  <Tooltip.Root>
+                    <Tooltip.Trigger asChild>
+                      <motion.div
+                        whileHover={{ scale: 1.15, rotate: 5 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ type: "spring", stiffness: 400 }}
+                        className="relative p-1.5 rounded-full group"
+                      >
+                        <Github className="h-4 w-4 cursor-pointer text-indigo-300 group-hover:text-white transition-colors relative z-10" />
+                      </motion.div>
+                    </Tooltip.Trigger>
+                    <Tooltip.Content className="bg-[#1E1E3F] text-white px-2.5 py-1.5 rounded-md text-xs border border-indigo-500/30 shadow-lg shadow-indigo-500/20">
+                      GitHub
+                    </Tooltip.Content>
+                  </Tooltip.Root>
+
+                  {/* LinkedIn */}
+                  <Tooltip.Root>
+                    <Tooltip.Trigger asChild>
+                      <motion.div
+                        whileHover={{ scale: 1.15, rotate: -5 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ type: "spring", stiffness: 400 }}
+                        className="relative p-1.5 rounded-full group"
+                      >
+                        <Linkedin className="h-4 w-4 cursor-pointer text-blue-300 group-hover:text-white transition-colors relative z-10" />
+                      </motion.div>
+                    </Tooltip.Trigger>
+                    <Tooltip.Content className="bg-[#1E1E3F] text-white px-2.5 py-1.5 rounded-md text-xs border border-blue-500/30 shadow-lg shadow-blue-500/20">
+                      LinkedIn
+                    </Tooltip.Content>
+                  </Tooltip.Root>
+
+                  {/* Facebook */}
+                  <Tooltip.Root>
+                    <Tooltip.Trigger asChild>
+                      <motion.div
+                        whileHover={{ scale: 1.15, rotate: 5 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ type: "spring", stiffness: 400 }}
+                        className="relative p-1.5 rounded-full group"
+                      >
+                        <Facebook className="h-4 w-4 cursor-pointer text-[#1877F2] group-hover:text-white transition-colors relative z-10" />
+                      </motion.div>
+                    </Tooltip.Trigger>
+                    <Tooltip.Content className="bg-[#1E1E3F] text-white px-2.5 py-1.5 rounded-md text-xs border border-[#1877F2]/30 shadow-lg shadow-[#1877F2]/20">
+                      Facebook
+                    </Tooltip.Content>
+                  </Tooltip.Root>
+                </div>
+              </div>
+            </motion.nav>
+
+            {/* Mobile Menu Button */}
+            <motion.button
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="mobile-menu-btn md:hidden flex items-center justify-center p-2 rounded-full bg-background/80 backdrop-blur-md shadow-md border border-indigo-500/20"
+            >
+              {isMenuOpen ? (
+                <X className="w-5 h-5 text-primary" />
+              ) : (
+                <Menu className="w-5 h-5 text-primary" />
+              )}
+            </motion.button>
+
+            {/* Mobile Menu */}
+            <AnimatePresence>
+              {isMenuOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                  className="mobile-nav absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl shadow-lg border-t border-indigo-500/20 py-4 px-4 sm:px-6 md:hidden overflow-y-auto max-h-[80vh]"
+                >
+                  <nav className="flex flex-col space-y-2 sm:space-y-3">
+                    {navItems.map((item) => (
+                      <motion.button
+                        key={item.id}
+                        onClick={() => scrollToSection(item.id)}
+                        className={`mobile-menu-item flex items-center space-x-3 p-2 rounded-lg transition-colors ${
+                          activeSection === item.id
+                            ? "bg-primary/10 text-primary"
+                            : "text-gray-300 hover:bg-primary/5 hover:text-primary"
+                        }`}
+                        whileTap={{ scale: 0.97 }}
+                      >
+                        <item.icon
+                          className={`h-5 w-5 ${
+                            activeSection === item.id
+                              ? "text-primary"
+                              : "text-gray-400"
+                          }`}
+                        />
+                        <span className="font-medium">{item.label}</span>
+                      </motion.button>
+                    ))}
+
+                    {/* Social links for mobile */}
+                    <div className="pt-4 mt-4 border-t border-indigo-500/20 flex justify-around">
+                      <motion.a
+                        href="https://github.com/yourusername"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.2 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="p-2 rounded-full bg-[#1E1E3F]/40 border border-indigo-500/30"
+                      >
+                        <Github className="h-5 w-5 text-indigo-300" />
+                      </motion.a>
+                      <motion.a
+                        href="https://linkedin.com/in/yourusername"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.2 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="p-2 rounded-full bg-[#1E1E3F]/40 border border-blue-500/30"
+                      >
+                        <Linkedin className="h-5 w-5 text-blue-300" />
+                      </motion.a>
+                      <motion.a
+                        href="https://facebook.com/yourusername"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.2 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="p-2 rounded-full bg-[#1E1E3F]/40 border border-[#1877F2]/30"
+                      >
+                        <Facebook className="h-5 w-5 text-[#1877F2]" />
+                      </motion.a>
+                    </div>
+                  </nav>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+      </header>
+    </Tooltip.Provider>
+  );
+};

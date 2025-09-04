@@ -1,0 +1,106 @@
+/* Responsive adjustments for very small screens */
+@media (max-width: 360px) {
+  /* Reduce text sizes further for very small screens */
+  h1 {
+    font-size: 1.75rem !important;
+  }
+  
+  h2 {
+    font-size: 1.5rem !important;
+  }
+  
+  h3 {
+    font-size: 1.25rem !important;
+  }
+  
+  p {
+    font-size: 0.875rem !important;
+  }
+  
+  /* Adjust spacing */
+  .container {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+  
+  /* Ensure buttons are properly sized */
+  button, .button {
+    padding: 0.5rem 0.75rem !important;
+  }
+  
+  /* Adjust grid gaps */
+  .gap-4, .gap-6, .gap-8 {
+    gap: 0.5rem !important;
+  }
+  
+  /* Make mobile menu more compact */
+  .mobile-menu-item {
+    padding: 0.5rem !important;
+  }
+  
+  /* Adjust logo text for very small screens */
+  .logo-text {
+    font-size: 0.875rem !important;
+  }
+}
+
+/* Fix any overflowing elements on mobile */
+.overflow-x-hidden {
+  overflow-x: hidden !important;
+}
+
+/* Improve tap targets on mobile */
+@media (max-width: 640px) {
+  button, a, [role="button"] {
+    min-height: 36px;
+    min-width: 36px;
+  }
+  
+  /* Improve navigation on small screens */
+  .logo-text {
+    font-size: 1rem !important;
+  }
+  
+  /* Ensure images scale properly */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Fix mobile navigation spacing */
+  .mobile-nav {
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  
+  /* Ensure mobile navigation buttons are visible */
+  .mobile-menu-btn {
+    z-index: 60;
+    position: relative;
+  }
+}
+
+/* Ensure content is readable on all devices */
+@media (max-width: 768px) {
+  /* Improve line heights for readability */
+  p, li {
+    line-height: 1.6 !important;
+  }
+  
+  /* Adjust section padding */
+  section {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+}
+
+/* Fix any potential horizontal scrolling issues */
+body, html {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Add smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}

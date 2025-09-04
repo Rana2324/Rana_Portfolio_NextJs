@@ -1,0 +1,74 @@
+/* Mobile-specific adjustments */
+
+/* Improve mobile navigation experience */
+@media (max-width: 768px) {
+  /* Ensure the mobile menu has proper z-index */
+  .mobile-nav {
+    z-index: 50;
+  }
+  
+  /* Adjust section padding for better mobile spacing */
+  section {
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+  }
+  
+  /* Improve mobile text scaling */
+  .hero-title {
+    font-size: clamp(1.5rem, 6vw, 3rem) !important;
+  }
+  
+  .hero-subtitle {
+    font-size: clamp(1rem, 4vw, 1.5rem) !important;
+  }
+  
+  /* Adjust skill cards on mobile */
+  .skill-card {
+    padding: 1rem !important;
+  }
+  
+  /* Adjust form fields on mobile */
+  input, textarea, select {
+    font-size: 16px !important; /* Prevents iOS zoom on focus */
+  }
+  
+  /* Fix any elements that might overflow on small screens */
+  .overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Ensure buttons are large enough to tap easily */
+  .mobile-tap-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Handle tiny screens (iPhone SE, etc.) */
+@media (max-width: 375px) {
+  .container {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+  
+  /* Adjust grid items for very small screens */
+  .grid {
+    gap: 0.5rem !important;
+  }
+  
+  /* Make sure text doesn't overflow */
+  .truncate-mobile {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+}
+
+/* Fix iOS-specific issues */
+@supports (-webkit-touch-callout: none) {
+  /* iOS-specific styles */
+  .min-h-screen {
+    min-height: -webkit-fill-available;
+  }
+}

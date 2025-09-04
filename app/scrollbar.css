@@ -1,0 +1,52 @@
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+  border-left: 1px solid hsl(var(--border) / 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    45deg,
+    hsl(var(--gradient-start)),
+    hsl(var(--gradient-mid)),
+    hsl(var(--gradient-end))
+  );
+  border-radius: 6px;
+  border: 2px solid hsl(var(--background));
+  transition: all 0.3s ease;
+  background-size: 200% 200%;
+  animation: gradient 5s ease infinite;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    45deg,
+    hsl(var(--gradient-end)),
+    hsl(var(--gradient-start)),
+    hsl(var(--gradient-mid))
+  );
+  border-width: 1.5px;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--gradient-mid)) hsl(var(--background));
+}

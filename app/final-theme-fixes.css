@@ -1,0 +1,107 @@
+/* Final theme overrides for specific issues */
+
+/* === SECTION BACKGROUNDS IN LIGHT MODE === */
+/* Clear background overrides for all sections */
+.light section,
+.light #hero,
+.light #about,
+.light #services,
+.light #skills,
+.light #portfolio,
+.light #experience,
+.light #testimonials,
+.light #contact {
+  background-color: #ffffff !important;
+  position: relative;
+}
+
+/* Add subtle section dividers in light mode */
+.light section:not(:first-child)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(226, 232, 240, 0),
+    rgba(226, 232, 240, 0.8),
+    rgba(226, 232, 240, 0)
+  );
+}
+
+/* === CARDS AND CONTAINERS === */
+/* Light mode card styling */
+.light .bg-gray-900,
+.light .bg-gray-800,
+.light .bg-gray-700,
+.light .bg-black,
+.light [class*="bg-gray-"][class*="/"],
+.light [class*="bg-black"][class*="/"] {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
+  color: #0f172a !important;
+}
+
+/* Service cards */
+.light #services .card,
+.light #services .grid > div {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Project cards */
+.light #portfolio .card,
+.light #portfolio .grid > div {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
+}
+
+/* Fix experience cards */
+.light #experience .timeline-item {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
+}
+
+/* === TEXT COLORS === */
+/* Generic text fixes */
+.light .text-white,
+.light .text-gray-100,
+.light .text-gray-200,
+.light .text-gray-300 {
+  color: #0f172a !important; /* slate-900 */
+}
+
+.light .text-gray-400,
+.light .text-gray-500,
+.light .text-muted {
+  color: #334155 !important; /* slate-700 */
+}
+
+/* === ANIMATIONS AND EFFECTS === */
+/* Reduce glow effects in light mode */
+.light .glow-effect,
+.light .glass-effect,
+.light [class*="shadow-"] {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Preserve gradient text effects */
+.light .text-gradient {
+  background-image: linear-gradient(90deg, #65a30d, #84cc16, #22c55e) !important;
+}
+
+/* Fix header and footer */
+.light header,
+.light footer {
+  background-color: #ffffff !important;
+  border-color: rgba(226, 232, 240, 0.8) !important;
+}
+
+/* Fix mobile menu */
+.light .mobile-menu {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px) !important;
+}

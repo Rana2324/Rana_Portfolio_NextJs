@@ -1,0 +1,45 @@
+/* Enhanced Project Card Responsiveness */
+@media (max-width: 640px) {
+  /* Adjust project cards on mobile */
+  .project-card {
+    transition: transform 0.3s ease;
+  }
+  
+  /* Reduce padding in card content */
+  .project-card-content {
+    padding: 1rem !important;
+  }
+  
+  /* Make sure buttons are properly sized */
+  .project-card-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+  
+  /* Handle technology badges */
+  .project-card-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+  
+  .project-card-tech span {
+    font-size: 0.7rem;
+    padding: 0.1rem 0.5rem;
+  }
+}
+
+/* Medium screens */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .project-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Large screens */
+@media (min-width: 1025px) {
+  .project-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

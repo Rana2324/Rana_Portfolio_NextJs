@@ -1,0 +1,23 @@
+/* Custom styles for the logo */
+.logo-text {
+  --shadow-color: rgba(139, 92, 246, 0.8);
+  text-shadow: 
+    0 0 5px var(--shadow-color),
+    0 0 10px var(--shadow-color),
+    0 0 15px var(--shadow-color),
+    0 0 20px var(--shadow-color);
+  animation: pulse 2s infinite;
+  color: white;
+}
+
+@keyframes pulse {
+  0% {
+    filter: drop-shadow(0 0 5px var(--shadow-color));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px var(--shadow-color));
+  }
+  100% {
+    filter: drop-shadow(0 0 5px var(--shadow-color));
+  }
+}
