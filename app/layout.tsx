@@ -6,6 +6,7 @@ import "./globals.css";
 import "./featured-projects-carousel.css";
 import "./portfolio-carousel.css";
 import "./swiper-styles.css";
+import "./swiper-coverflow.css";
 
 const inter = Inter({
   subsets: ["latin"],

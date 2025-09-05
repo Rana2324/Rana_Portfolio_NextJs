@@ -36,12 +36,22 @@
   background: rgba(255, 255, 255, 0.2);
   opacity: 1;
   transition: all 0.3s ease;
+  margin: 0 5px !important;
+  box-shadow: 0 0 5px rgba(99, 102, 241, 0.2);
 }
 
 .swiper-pagination-bullet-active {
-  width: 30px;
+  width: 36px;
   border-radius: 4px;
   background: linear-gradient(to right, #6366f1, #a855f7, #ec4899);
+  box-shadow: 0 0 8px rgba(99, 102, 241, 0.4);
+}
+
+/* Dynamic bullets */
+.swiper-pagination-bullet-active-prev,
+.swiper-pagination-bullet-active-next {
+  transform: scale(0.8);
+  background: rgba(137, 90, 245, 0.3);
 }
 
 /* Hide default swiper button arrows */
@@ -53,19 +63,35 @@
 /* Navigation button styles */
 .swiper-button-next,
 .swiper-button-prev {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  opacity: 0.9;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  opacity: 0.95;
   transition: all 0.3s ease;
+  position: relative;
+  z-index: 20;
 }
 
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
   opacity: 1;
+  box-shadow: 0 12px 40px rgba(99, 102, 241, 0.3);
 }
 
 .swiper-button-disabled {
   opacity: 0.4 !important;
   cursor: not-allowed;
+  filter: grayscale(0.6);
+}
+
+/* Navigation arrow animation */
+.swiper-button-next svg path,
+.swiper-button-prev svg path {
+  transition: all 0.3s ease;
+}
+
+.swiper-button-next:hover svg path,
+.swiper-button-prev:hover svg path {
+  stroke-width: 3;
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));
 }
 
 /* Slide animations */

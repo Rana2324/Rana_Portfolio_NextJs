@@ -257,17 +257,19 @@ const PortfolioCarousel = () => {
           <div className="flex justify-between absolute top-1/2 left-0 right-0 z-10 transform -translate-y-1/2 pointer-events-none px-2 md:px-6">
             <button
               ref={navigationPrevRef}
-              className="bg-gradient-to-r from-indigo-500/80 to-purple-500/80 backdrop-blur-sm border border-white/20 rounded-full p-3 md:p-4 shadow-xl text-white hover:scale-110 hover:brightness-110 transition-all duration-300 pointer-events-auto"
+              className="bg-gradient-to-r from-indigo-500/80 to-purple-500/80 backdrop-blur-sm border border-white/20 rounded-full pl-3 pr-5 py-3 md:pl-3 md:pr-5 md:py-3 shadow-xl text-white hover:scale-105 hover:brightness-110 transition-all duration-300 pointer-events-auto flex items-center gap-1.5"
               aria-label="Previous slide"
             >
-              <ChevronLeft size={24} className="stroke-[2.5px]" />
+              <ChevronLeft size={20} className="stroke-[2.5px]" />
+              <span className="text-sm font-medium tracking-wide">Back</span>
             </button>
             <button
               ref={navigationNextRef}
-              className="bg-gradient-to-r from-purple-500/80 to-pink-500/80 backdrop-blur-sm border border-white/20 rounded-full p-3 md:p-4 shadow-xl text-white hover:scale-110 hover:brightness-110 transition-all duration-300 pointer-events-auto"
+              className="bg-gradient-to-r from-purple-500/80 to-pink-500/80 backdrop-blur-sm border border-white/20 rounded-full pl-5 pr-3 py-3 md:pl-5 md:pr-3 md:py-3 shadow-xl text-white hover:scale-105 hover:brightness-110 transition-all duration-300 pointer-events-auto flex items-center gap-1.5"
               aria-label="Next slide"
             >
-              <ChevronRight size={24} className="stroke-[2.5px]" />
+              <span className="text-sm font-medium tracking-wide">Next</span>
+              <ChevronRight size={20} className="stroke-[2.5px]" />
             </button>
           </div>
 

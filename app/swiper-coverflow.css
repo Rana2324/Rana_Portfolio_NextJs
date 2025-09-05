@@ -1,0 +1,39 @@
+@import 'swiper/css/effect-coverflow';
+
+/* Custom coverflow effect styles */
+.swiper-slide {
+  transform-style: preserve-3d;
+  transition: all 0.5s ease;
+  filter: brightness(0.8);
+}
+
+.swiper-slide-active {
+  transform: translateZ(0) scale(1.05);
+  filter: brightness(1);
+  z-index: 10;
+}
+
+.swiper-slide-prev,
+.swiper-slide-next {
+  opacity: 0.8;
+  transform: scale(0.9);
+  filter: brightness(0.9);
+}
+
+.swiper-slide-prev {
+  transform-origin: right center;
+}
+
+.swiper-slide-next {
+  transform-origin: left center;
+}
+
+/* Enhanced 3D effect */
+.swiper-slide-shadow-left,
+.swiper-slide-shadow-right {
+  background-image: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0)
+  ) !important;
+}
