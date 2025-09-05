@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 import { Inter, Space_Grotesk, Poppins } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
+import "./featured-projects-carousel.css";
+import "./portfolio-carousel.css";
+import "./swiper-styles.css";
 
 const inter = Inter({
   subsets: ["latin"],

@@ -101,12 +101,12 @@ export function About() {
   ];
 
   // Professional achievements
-  const achievements = [
-    "Successfully delivered 64+ projects to clients worldwide",
-    "Specialized in responsive web applications and mobile apps",
-    "Expertise in modern frontend frameworks and technologies",
-    "Proficient in SEO optimization and performance tuning",
-  ];
+  // const achievements = [
+  //   "Successfully delivered 64+ projects to clients worldwide",
+  //   "Specialized in responsive web applications and mobile apps",
+  //   "Expertise in modern frontend frameworks and technologies",
+  //   "Proficient in SEO optimization and performance tuning",
+  // ];
 
   return (
     <motion.section
@@ -612,7 +612,7 @@ export function About() {
               </motion.div>
 
               {/* Professional achievements */}
-              <motion.div variants={containerVariants} className="px-4 sm:px-0">
+              {/* <motion.div variants={containerVariants} className="px-4 sm:px-0">
                 <motion.h4
                   className="text-xl sm:text-2xl font-semibold mb-4 text-center lg:text-left flex items-center gap-2"
                   variants={itemVariants}
@@ -646,7 +646,7 @@ export function About() {
                     </motion.div>
                   ))}
                 </motion.div>
-              </motion.div>
+              </motion.div> */}
 
               {/* Skills grid with improved layout */}
               <motion.div variants={containerVariants} className="px-4 sm:px-0">

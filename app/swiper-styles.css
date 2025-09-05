@@ -1,0 +1,16 @@
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
+
+/* Custom Swiper navigation styling */
+.swiper-button-next:after, 
+.swiper-button-prev:after {
+  display: none;
+}
+
+.swiper-pagination {
+  position: absolute;
+  bottom: 0 !important;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}

@@ -644,7 +644,7 @@ export default function SkillsSection() {
           <AnimatePresence mode="wait">
             {displayedSkills.map((skill) => (
               <SkillCard
-                key={skill.name}
+                key={`${skill.name}-${skill.category || ""}`}
                 skill={skill}
                 categoryColor={
                   skill.category

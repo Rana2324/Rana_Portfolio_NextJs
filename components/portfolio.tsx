@@ -1,12 +1,19 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const categories = ["All"];
 
@@ -58,7 +65,7 @@ const projects: Project[] = [
   },
   {
     id: "project4",
-    title: "rEACT.js bLOG",
+    title: "React.js blog",
     description:
       "Blog platform with user authentication, rich text editing, and responsive design.",
     tags: ["React.js", "Prisma", "PostgreSQL", "Stripe"],
@@ -69,13 +76,24 @@ const projects: Project[] = [
   },
   {
     id: "project5",
-    title: "Dashboard Website",
+    title: " Website",
     description:
       "Dashboard website with dynamic animations, dark mode, and internationalization.",
     tags: ["Next.js", "TypeScript", "TailwindCSS", "Framer Motion"],
-    image: "/images/screencapture-localhost-3000-2025-08-16-03_12_42.png",
+    video: "/images/project  5.mp4",
     demoUrl: "https://dash-board-next-js-beta.vercel.app/",
     codeUrl: "https://github.com/Rana2324/DashBoard_NextJs",
+    category: "Website",
+  },
+  {
+    id: "project6",
+    title: "Flower shop Website",
+    description:
+      "flower shop website with dynamic animations, dark mode, and internationalization.",
+    tags: ["Next.js", "TypeScript", "TailwindCSS", "Framer Motion"],
+    video: "/images/project  6.mp4",
+    demoUrl: "https://flower-shop-plum-chi.vercel.app/",
+    codeUrl: "https://github.com/Rana2324/flower-shop",
     category: "Website",
   },
 ];
@@ -86,6 +104,25 @@ const Portfolio = () => {
     [key: string]: boolean;
   }>({});
   const [hoveredVideo, setHoveredVideo] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Navigation button references
+  const navigationPrevRef = useRef(null);
+  const navigationNextRef = useRef(null);
+
+  // Check if the device is mobile
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkIsMobile();
+    window.addEventListener("resize", checkIsMobile);
+
+    return () => {
+      window.removeEventListener("resize", checkIsMobile);
+    };
+  }, []);
 
   // Initialize videos in paused state
   useEffect(() => {
@@ -230,230 +267,288 @@ const Portfolio = () => {
           ))}
         </div>
 
-        {/* Projects grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+        {/* Projects carousel */}
+        <div className="relative">
+          {/* Custom navigation buttons */}
+          <div className="flex justify-between absolute top-1/2 left-[-20px] right-[-20px] z-20 transform -translate-y-1/2 pointer-events-none">
+            <button
+              ref={navigationPrevRef}
+              className="bg-white/5 backdrop-blur-md border border-white/10 rounded-full p-2.5 md:p-3.5 shadow-xl text-white hover:bg-indigo-500/40 transition-all pointer-events-auto group"
+              aria-label="Previous slide"
             >
-              <Card className="group relative overflow-hidden bg-white/5 border border-white/10 hover:border-indigo-500/50 backdrop-blur-sm transition-all duration-500 rounded-xl shadow-xl hover:scale-[1.02]">
-                <CardContent className="p-0">
-                  {/* Media */}
-                  <div className="aspect-video w-full overflow-hidden bg-gradient-to-br from-purple-500/10 via-indigo-500/10 to-blue-500/10 relative">
-                    {project.video ? (
-                      <div
-                        className="relative group cursor-pointer"
-                        onMouseEnter={() => setHoveredVideo(project.id)}
-                        onMouseLeave={() => setHoveredVideo(null)}
-                      >
-                        <div
-                          className={`absolute inset-0 bg-black/40 transition-opacity duration-300 z-10 ${
-                            hoveredVideo === project.id
-                              ? "opacity-100"
-                              : "opacity-0"
-                          }`}
-                        />
-                        <video
-                          id={`video-${project.id}`}
-                          data-project-id={project.id}
-                          preload="metadata"
-                          loop
-                          muted
-                          playsInline
-                          controls={false}
-                          src={project.video}
-                          poster={project.image || ""}
-                          className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
-                          style={{ minHeight: "200px" }}
-                          onError={(e) => {
-                            console.error(
-                              `Error loading video for ${project.id}:`,
-                              e
-                            );
-                          }}
-                          onLoadedData={(e) => {
-                            const video = e.currentTarget;
-                            video.currentTime = 0;
-                          }}
-                        ></video>
+              <ChevronLeft
+                size={22}
+                className="group-hover:scale-110 transition-transform"
+              />
+            </button>
+            <button
+              ref={navigationNextRef}
+              className="bg-white/5 backdrop-blur-md border border-white/10 rounded-full p-2.5 md:p-3.5 shadow-xl text-white hover:bg-indigo-500/40 transition-all pointer-events-auto group"
+              aria-label="Next slide"
+            >
+              <ChevronRight
+                size={22}
+                className="group-hover:scale-110 transition-transform"
+              />
+            </button>
+          </div>
 
-                        {/* Overlay controls */}
-                        <div
-                          className={`absolute inset-0 flex items-center justify-center z-20 transition-all duration-300 ${
-                            hoveredVideo === project.id
-                              ? "opacity-100"
-                              : "opacity-0"
-                          }`}
-                        >
-                          <button
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-
-                              const videoElement = document.getElementById(
-                                `video-${project.id}`
-                              ) as HTMLVideoElement;
-
-                              if (!videoElement) return;
-
-                              // Toggle video playback
-                              if (videoElement.paused) {
-                                const playPromise = videoElement.play();
-                                if (playPromise !== undefined) {
-                                  playPromise
-                                    .then(() => {
-                                      setPlayingVideos((prev) => ({
-                                        ...prev,
-                                        [project.id]: true,
-                                      }));
-                                    })
-                                    .catch((error) => {
-                                      console.error(
-                                        "Error playing video:",
-                                        error
-                                      );
-                                      // Try to play again with user interaction
-                                      const playWithClick = () => {
-                                        videoElement.play();
-                                        setPlayingVideos((prev) => ({
-                                          ...prev,
-                                          [project.id]: true,
-                                        }));
-                                        document.removeEventListener(
-                                          "click",
-                                          playWithClick
-                                        );
-                                      };
-                                      document.addEventListener(
-                                        "click",
-                                        playWithClick
-                                      );
-                                    });
-                                }
-                              } else {
-                                videoElement.pause();
-                                setPlayingVideos((prev) => ({
-                                  ...prev,
-                                  [project.id]: false,
-                                }));
-                              }
-                            }}
-                            className="bg-black/50 rounded-full p-4 hover:scale-110 transition"
+          <Swiper
+            modules={[Navigation, Pagination]}
+            spaceBetween={24}
+            slidesPerView={isMobile ? 1 : 2}
+            navigation={{
+              prevEl: navigationPrevRef.current,
+              nextEl: navigationNextRef.current,
+            }}
+            pagination={{
+              clickable: true,
+              bulletActiveClass:
+                "swiper-pagination-bullet-active portfolio-bullet-active",
+            }}
+            loop={true}
+            grabCursor={true}
+            centeredSlides={isMobile}
+            speed={700}
+            onInit={(swiper) => {
+              // @ts-ignore
+              swiper.params.navigation.prevEl = navigationPrevRef.current;
+              // @ts-ignore
+              swiper.params.navigation.nextEl = navigationNextRef.current;
+              swiper.navigation.init();
+              swiper.navigation.update();
+            }}
+            className="swiper-container !pb-16 mx-4"
+          >
+            {filteredProjects.map((project, index) => (
+              <SwiperSlide key={project.id}>
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="h-full"
+                >
+                  <Card className="group relative overflow-hidden bg-[#12122A]/70 border border-white/10 hover:border-indigo-500/50 backdrop-blur-sm transition-all duration-500 rounded-xl shadow-xl hover:scale-[1.02]">
+                    <CardContent className="p-0">
+                      {/* Media */}
+                      <div className="aspect-video w-full overflow-hidden bg-gradient-to-br from-purple-500/10 via-indigo-500/10 to-blue-500/10 relative">
+                        {project.video ? (
+                          <div
+                            className="relative group cursor-pointer"
+                            onMouseEnter={() => setHoveredVideo(project.id)}
+                            onMouseLeave={() => setHoveredVideo(null)}
                           >
-                            {playingVideos[project.id] ? (
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                fill="none"
-                                stroke="white"
-                                strokeWidth="2"
+                            <div
+                              className={`absolute inset-0 bg-black/40 transition-opacity duration-300 z-10 ${
+                                hoveredVideo === project.id
+                                  ? "opacity-100"
+                                  : "opacity-0"
+                              }`}
+                            />
+                            <video
+                              id={`video-${project.id}`}
+                              data-project-id={project.id}
+                              preload="metadata"
+                              loop
+                              muted
+                              playsInline
+                              controls={false}
+                              src={project.video}
+                              poster={project.image || ""}
+                              className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
+                              style={{ minHeight: "200px" }}
+                              onError={(e) => {
+                                console.error(
+                                  `Error loading video for ${project.id}:`,
+                                  e
+                                );
+                              }}
+                              onLoadedData={(e) => {
+                                const video = e.currentTarget;
+                                video.currentTime = 0;
+                              }}
+                            ></video>
+
+                            {/* Overlay controls */}
+                            <div
+                              className={`absolute inset-0 flex items-center justify-center z-20 transition-all duration-300 ${
+                                hoveredVideo === project.id
+                                  ? "opacity-100"
+                                  : "opacity-0"
+                              }`}
+                            >
+                              <button
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+
+                                  const videoElement = document.getElementById(
+                                    `video-${project.id}`
+                                  ) as HTMLVideoElement;
+
+                                  if (!videoElement) return;
+
+                                  // Toggle video playback
+                                  if (videoElement.paused) {
+                                    const playPromise = videoElement.play();
+                                    if (playPromise !== undefined) {
+                                      playPromise
+                                        .then(() => {
+                                          setPlayingVideos((prev) => ({
+                                            ...prev,
+                                            [project.id]: true,
+                                          }));
+                                        })
+                                        .catch((error) => {
+                                          console.error(
+                                            "Error playing video:",
+                                            error
+                                          );
+                                          // Try to play again with user interaction
+                                          const playWithClick = () => {
+                                            videoElement.play();
+                                            setPlayingVideos((prev) => ({
+                                              ...prev,
+                                              [project.id]: true,
+                                            }));
+                                            document.removeEventListener(
+                                              "click",
+                                              playWithClick
+                                            );
+                                          };
+                                          document.addEventListener(
+                                            "click",
+                                            playWithClick
+                                          );
+                                        });
+                                    }
+                                  } else {
+                                    videoElement.pause();
+                                    setPlayingVideos((prev) => ({
+                                      ...prev,
+                                      [project.id]: false,
+                                    }));
+                                  }
+                                }}
+                                className="bg-black/50 rounded-full p-4 hover:scale-110 transition"
                               >
-                                <rect x="6" y="4" width="4" height="16" />
-                                <rect x="14" y="4" width="4" height="16" />
-                              </svg>
-                            ) : (
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                fill="none"
-                                stroke="white"
-                                strokeWidth="2"
-                              >
-                                <polygon points="5 3 19 12 5 21 5 3" />
-                              </svg>
-                            )}
-                          </button>
+                                {playingVideos[project.id] ? (
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    fill="none"
+                                    stroke="white"
+                                    strokeWidth="2"
+                                  >
+                                    <rect x="6" y="4" width="4" height="16" />
+                                    <rect x="14" y="4" width="4" height="16" />
+                                  </svg>
+                                ) : (
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    fill="none"
+                                    stroke="white"
+                                    strokeWidth="2"
+                                  >
+                                    <polygon points="5 3 19 12 5 21 5 3" />
+                                  </svg>
+                                )}
+                              </button>
+                            </div>
+
+                            {/* Tooltip */}
+                            <div
+                              className={`absolute bottom-4 left-4 text-white text-sm px-3 py-1 rounded-lg bg-black/50 backdrop-blur-sm transition ${
+                                hoveredVideo === project.id
+                                  ? "opacity-100"
+                                  : "opacity-0"
+                              }`}
+                            >
+                              {playingVideos[project.id]
+                                ? "Click to pause"
+                                : "Click to play"}
+                            </div>
+                          </div>
+                        ) : project.image ? (
+                          <Image
+                            src={project.image}
+                            alt={project.title}
+                            fill
+                            className="object-cover"
+                          />
+                        ) : null}
+                      </div>
+
+                      {/* Info */}
+                      <div className="p-6">
+                        <h3 className="text-xl font-semibold text-white mb-2">
+                          {project.title}
+                        </h3>
+                        <Badge
+                          variant="secondary"
+                          className="text-xs mb-3 bg-white/10 text-gray-200"
+                        >
+                          {project.category || "Website"}
+                        </Badge>
+                        <p className="text-gray-300 mb-5 text-sm line-clamp-3">
+                          {project.description}
+                        </p>
+
+                        {/* Links */}
+                        <div className="flex gap-3">
+                          <Button
+                            asChild
+                            size="sm"
+                            className="bg-indigo-600 hover:bg-indigo-500 text-white border-none transition-all"
+                          >
+                            <a
+                              href={project.demoUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <ExternalLink className="w-4 h-4 mr-2" /> Live
+                              Demo
+                            </a>
+                          </Button>
+                          <Button
+                            asChild
+                            size="sm"
+                            variant="outline"
+                            className="border-white/20 hover:bg-white/5"
+                          >
+                            <a
+                              href={project.codeUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <Github className="w-4 h-4 mr-2" /> Code
+                            </a>
+                          </Button>
                         </div>
 
-                        {/* Tooltip */}
-                        <div
-                          className={`absolute bottom-4 left-4 text-white text-sm px-3 py-1 rounded-lg bg-black/50 backdrop-blur-sm transition ${
-                            hoveredVideo === project.id
-                              ? "opacity-100"
-                              : "opacity-0"
-                          }`}
-                        >
-                          {playingVideos[project.id]
-                            ? "Click to pause"
-                            : "Click to play"}
+                        {/* Tags */}
+                        <div className="mt-5 flex flex-wrap gap-2 pt-3 border-t border-white/10">
+                          {project.tags.map((tech) => (
+                            <Badge
+                              key={tech}
+                              variant="outline"
+                              className="border-white/10 text-xs px-2.5 py-0.5 text-gray-300 bg-transparent"
+                            >
+                              {tech}
+                            </Badge>
+                          ))}
                         </div>
                       </div>
-                    ) : project.image ? (
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        className="object-cover"
-                      />
-                    ) : null}
-                  </div>
-
-                  {/* Info */}
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold text-white mb-2">
-                      {project.title}
-                    </h3>
-                    <Badge variant="secondary" className="text-xs mb-3">
-                      {project.category || "Website"}
-                    </Badge>
-                    <p className="text-gray-400 mb-4 text-sm line-clamp-3">
-                      {project.description}
-                    </p>
-
-                    {/* Links */}
-                    <div className="flex gap-4">
-                      <Button
-                        asChild
-                        size="sm"
-                        className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white"
-                      >
-                        <a
-                          href={project.demoUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <ExternalLink className="w-4 h-4 mr-2" /> Live Demo
-                        </a>
-                      </Button>
-                      <Button
-                        asChild
-                        size="sm"
-                        variant="outline"
-                        className="border-white/10"
-                      >
-                        <a
-                          href={project.codeUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <Github className="w-4 h-4 mr-2" /> Code
-                        </a>
-                      </Button>
-                    </div>
-
-                    {/* Tags */}
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {project.tags.map((tech) => (
-                        <Badge
-                          key={tech}
-                          variant="secondary"
-                          className="bg-white/5 text-xs px-2 py-0.5"
-                        >
-                          {tech}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       </div>
     </section>
