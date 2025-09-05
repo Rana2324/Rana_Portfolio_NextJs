@@ -257,7 +257,7 @@ export function Footer() {
                     >
                       <div className="w-full h-full rounded-lg bg-[#151528] flex items-center justify-center group-hover:bg-[#1E1E3F] transition-colors duration-300">
                         <Icon
-                          className="text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-purple-200"
+                          className="text-white group-hover:text-white group-hover:opacity-100"
                           size={20}
                         />
                       </div>
